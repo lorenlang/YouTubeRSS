@@ -7,10 +7,23 @@ namespace Composer\Autoload;
 class ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7
 {
     public static $files = array (
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         'bf9f5270ae66ac6fa0290b4bf47867b7' => __DIR__ . '/..' . '/adodb/adodb-php/adodb.inc.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'Y' => 
+        array (
+            'YouTubeRSS\\' => 11,
+        ),
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Php80\\' => 23,
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Contracts\\Translation\\' => 30,
+            'Symfony\\Component\\Translation\\' => 30,
+        ),
         'M' => 
         array (
             'Monolog\\' => 8,
@@ -19,9 +32,33 @@ class ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7
         array (
             'FeedWriter\\' => 11,
         ),
+        'C' => 
+        array (
+            'Carbon\\' => 7,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'YouTubeRSS\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/classes',
+        ),
+        'Symfony\\Polyfill\\Php80\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Contracts\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation-contracts',
+        ),
+        'Symfony\\Component\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation',
+        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -29,6 +66,10 @@ class ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7
         'FeedWriter\\' => 
         array (
             0 => __DIR__ . '/..' . '/mibe/feedwriter',
+        ),
+        'Carbon\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
     );
 
@@ -42,12 +83,18 @@ class ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7
         ),
     );
 
+    public static $classMap = array (
+        'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7::$classMap;
 
         }, null, ClassLoader::class);
     }
