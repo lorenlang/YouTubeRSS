@@ -10,6 +10,7 @@
     }
   ],
   "require": {
+    "ext-json": "*",
     "mibe/feedwriter": "^1.1",
     "monolog/monolog": "1.13.1",
     "adodb/adodb-php": "v5.19"
