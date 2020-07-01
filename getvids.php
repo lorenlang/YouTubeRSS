@@ -36,13 +36,13 @@ function addVideo($DB, $channel, $vidID, $title, $duration, $date = NULL)
 if ( ! (file_exists(STORAGE_PATH) && is_dir(STORAGE_PATH) && is_writable(STORAGE_PATH))) {
     // Set up storage directory if it doesn't exist
     mkdir(STORAGE_PATH);
-    // } else {
-    //     // Otherwise, remove all temp files leftover from last run
-    //     foreach (glob(STORAGE_PATH . '/*.html') as $tempfile) {
-    //         if (is_file($tempfile)) {
-    //             unlink($tempfile);
-    //         }
-    //     }
+    } else {
+        // Otherwise, remove all temp files leftover from last run
+        foreach (glob(STORAGE_PATH . '/*.html') as $tempfile) {
+            if (is_file($tempfile)) {
+                unlink($tempfile);
+            }
+        }
 }
 
 
@@ -65,7 +65,7 @@ foreach ($channels->items as $channel) {
     $url = str_replace($srch, $repl, CHANNEL_URL);
 
     $filename = STORAGE_PATH . "/$channel->id.html";
-    // exec("wget $url -O $filename > /dev/null 2>&1");
+    exec("wget $url -O $filename > /dev/null 2>&1");
 
     if (is_file($filename)) {
         $work = file_get_contents($filename);
