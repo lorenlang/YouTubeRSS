@@ -1,0 +1,17 @@
+{
+  "name": "lorenlang/youtube-rss",
+  "description": "Create an aggregated RSS feed from given YouTube channel names",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Loren Lang",
+      "email": "loren@lorenlang.com"
+    }
+  ],
+  "require": {
+    "mibe/feedwriter": "^1.1",
+    "monolog/monolog": "1.13.1",
+    "adodb/adodb-php": "v5.19"
+  }
+}
