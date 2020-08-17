@@ -90,8 +90,8 @@ foreach ($channels->items as $channel) {
                 $now  = Carbon::now();
                 $date = $now->sub(str_replace(' ago', '', $date));
 
-                echo "\t" . $title . PHP_EOL;
-                // addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
+                // echo "\t" . $title . PHP_EOL;
+                addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
             }
 
         } else {
@@ -132,8 +132,8 @@ foreach ($channels->items as $channel) {
                     }
                 }
 
-                echo "\t" . $title . PHP_EOL;
-                // addVideo($DB, $channel->id, $vidID, $title, $duration);
+                // echo "\t" . $title . PHP_EOL;
+                addVideo($DB, $channel->id, $vidID, $title, $duration);
             }
 
         }
