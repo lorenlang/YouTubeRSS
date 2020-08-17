@@ -83,14 +83,15 @@ foreach ($channels->items as $channel) {
             foreach ($vids as $vid) {
 
                 $vidID    = $vid->gridVideoRenderer->videoId;
-                $title    = $vid->gridVideoRenderer->title->simpleText;
+                $title    = $vid->gridVideoRenderer->title->simpleText ? $vid->gridVideoRenderer->title->simpleText : $vid->gridVideoRenderer->title->runs[0]->text;
                 $date     = $vid->gridVideoRenderer->publishedTimeText->simpleText;
                 $duration = $vid->gridVideoRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
 
                 $now  = Carbon::now();
                 $date = $now->sub(str_replace(' ago', '', $date));
 
-                addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
+                echo "\t" . $title . PHP_EOL;
+                // addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
             }
 
         } else {
@@ -131,7 +132,8 @@ foreach ($channels->items as $channel) {
                     }
                 }
 
-                addVideo($DB, $channel->id, $vidID, $title, $duration);
+                echo "\t" . $title . PHP_EOL;
+                // addVideo($DB, $channel->id, $vidID, $title, $duration);
             }
 
         }
