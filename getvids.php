@@ -94,6 +94,29 @@ foreach ($channels->items as $channel) {
                 addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
             }
 
+        } else if (strpos($work, 'var ytInitialData = ') !== FALSE) {
+
+            list($junk, $work) = explode('var ytInitialData = ', $work);
+            list($work, $junk) = explode(';</script', $work);
+
+
+            $json = json_decode(rtrim(trim($work), ';'));
+            $vids = $json->contents->twoColumnBrowseResultsRenderer->tabs[1]->tabRenderer->content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->gridRenderer->items;
+
+            foreach ($vids as $vid) {
+
+                $vidID    = $vid->gridVideoRenderer->videoId;
+                $title    = $vid->gridVideoRenderer->title->simpleText ? $vid->gridVideoRenderer->title->simpleText : $vid->gridVideoRenderer->title->runs[0]->text;
+                $date     = $vid->gridVideoRenderer->publishedTimeText->simpleText;
+                $duration = $vid->gridVideoRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
+
+                $now  = Carbon::now();
+                $date = $now->sub(str_replace(' ago', '', $date));
+
+                // echo "\t" . $title . PHP_EOL;
+                addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
+            }
+
         } else {
 
             $dom = new DOMDocument();
