@@ -1,12 +1,14 @@
 <?php
 /*
-V5.19  23-Apr-2014  (c) 2000-2014 John Lim (jlim#natsoft.com). All rights reserved.
+@version   v5.20.21  22-Jan-2022
+@copyright (c) 2000-2013 John Lim (jlim#natsoft.com). All rights reserved.
+@copyright (c) 2014      Damien Regad, Mark Newnham and the ADOdb community
   Released under both BSD license and Lesser GPL library license.
   Whenever there is any discrepancy between the two licenses,
   the BSD license will take precedence.
   Set tabs to 4 for best viewing.
 
-  Latest version is available at http://adodb.sourceforge.net
+  Latest version is available at http://adodb.org/
 */
 
 
@@ -913,7 +915,7 @@ END Adodb;
 	print "<p>GetRowAssoc Upper: Should get 1, Caroline</p>";
 	$rs = $db->SelectLimit('select id,firstname from ADOXYZ order by id',1);
 	if ($rs && !$rs->EOF) {
-		$arr = $rs->GetRowAssoc();
+		$arr = $rs->GetRowAssoc(ADODB_ASSOC_CASE_UPPER);
 
 		if ($arr[strtoupper($id)] != 1) {Err("Error 1");print_r($arr);};
 		if (trim($arr[strtoupper($fname)]) != 'Caroline') {Err("Error 2"); print_r($arr);};
@@ -924,7 +926,7 @@ END Adodb;
 	print "<p>GetRowAssoc Lower: Should get 1, Caroline</p>";
 	$rs = $db->SelectLimit('select id,firstname from ADOXYZ order by id',1);
 	if ($rs && !$rs->EOF) {
-		$arr = $rs->GetRowAssoc(false);
+		$arr = $rs->GetRowAssoc(ADODB_ASSOC_CASE_LOWER);
 		if ($arr['id'] != 1) {Err("Error 1"); print_r($arr);};
 		if (trim($arr['firstname']) != 'Caroline') {Err("Error 2"); print_r($arr);};
 
@@ -1739,8 +1741,11 @@ if (sizeof($_GET) == 0) $testmysql = true;
 
 
 foreach($_GET as $k=>$v)  {
-	//global $$k;
-	$$k = $v;
+	// XSS protection (see Github issue #274) - only set variables for
+	// expected get parameters used in testdatabases.inc.php
+	if(preg_match('/^(test|no)\w+$/', $k)) {
+		$$k = $v;
+	}
 }
 
 ?>
@@ -1751,7 +1756,7 @@ foreach($_GET as $k=>$v)  {
 
 This script tests the following databases: Interbase, Oracle, Visual FoxPro, Microsoft Access (ODBC and ADO), MySQL, MSSQL (ODBC, native, ADO).
 There is also support for Sybase, PostgreSQL.</p>
-For the latest version of ADODB, visit <a href=http://adodb.sourceforge.net/>adodb.sourceforge.net</a>.</p>
+For the latest version of ADODB, visit <a href=http://adodb.org//>adodb.org</a>.</p>
 
 Test <a href=test4.php>GetInsertSQL/GetUpdateSQL</a> &nbsp;
 	<a href=testsessions.php>Sessions</a> &nbsp;
