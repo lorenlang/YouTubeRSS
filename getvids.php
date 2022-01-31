@@ -89,7 +89,7 @@ foreach ($channels->items as $channel) {
                     $duration = $vid->gridVideoRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
 
                     $now  = Carbon::now();
-		    $date = $now->sub(str_replace(['Streamed ', ' ago'], ['',''], $date));
+        		    $date = $now->sub(str_replace(['Streamed ', ' ago'], ['',''], $date));
 
                     // echo "\t" . $title . PHP_EOL;
                     addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
@@ -110,12 +110,11 @@ foreach ($channels->items as $channel) {
 
                     $vidID    = $vid->gridVideoRenderer->videoId;
                     $title    = $vid->gridVideoRenderer->title->simpleText ?? $vid->gridVideoRenderer->title->runs[0]->text;
-                    //$title    = $vid->gridVideoRenderer->title->simpleText ? $vid->gridVideoRenderer->title->simpleText : $vid->gridVideoRenderer->title->runs[0]->text;
                     $date     = $vid->gridVideoRenderer->publishedTimeText->simpleText;
                     $duration = $vid->gridVideoRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
 
                     $now  = Carbon::now();
-		    $date = $now->sub(str_replace(['Streamed ', ' ago'], ['',''], $date));
+		            $date = $now->sub(str_replace(['Streamed ', ' ago'], ['',''], $date));
 
                     // echo "\t" . $title . PHP_EOL;
                     addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
