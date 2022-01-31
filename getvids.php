@@ -18,7 +18,7 @@ require_once 'database.php';
 
 function addVideo($DB, $channel, $vidID, $title, $duration, $date = NULL)
 {
-    if (!$date) {
+    if ( ! $date) {
         $date = Carbon::now();
     }
 
@@ -36,13 +36,13 @@ function addVideo($DB, $channel, $vidID, $title, $duration, $date = NULL)
 if ( ! (file_exists(STORAGE_PATH) && is_dir(STORAGE_PATH) && is_writable(STORAGE_PATH))) {
     // Set up storage directory if it doesn't exist
     mkdir(STORAGE_PATH);
-    } else {
-        // Otherwise, remove all temp files leftover from last run
-        foreach (glob(STORAGE_PATH . '/*.html') as $tempfile) {
-            if (is_file($tempfile)) {
-                unlink($tempfile);
-            }
+} else {
+    // Otherwise, remove all temp files leftover from last run
+    foreach (glob(STORAGE_PATH . '/*.html') as $tempfile) {
+        if (is_file($tempfile)) {
+            unlink($tempfile);
         }
+    }
 }
 
 
@@ -104,17 +104,19 @@ foreach ($channels->items as $channel) {
             $vids = $json->contents->twoColumnBrowseResultsRenderer->tabs[1]->tabRenderer->content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->gridRenderer->items;
 
             foreach ($vids as $vid) {
+                if (isset($vid->gridVideoRenderer)) {
 
-                $vidID    = $vid->gridVideoRenderer->videoId;
-                $title    = $vid->gridVideoRenderer->title->simpleText ? $vid->gridVideoRenderer->title->simpleText : $vid->gridVideoRenderer->title->runs[0]->text;
-                $date     = $vid->gridVideoRenderer->publishedTimeText->simpleText;
-                $duration = $vid->gridVideoRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
+                    $vidID    = $vid->gridVideoRenderer->videoId;
+                    $title    = $vid->gridVideoRenderer->title->simpleText ? $vid->gridVideoRenderer->title->simpleText : $vid->gridVideoRenderer->title->runs[0]->text;
+                    $date     = $vid->gridVideoRenderer->publishedTimeText->simpleText;
+                    $duration = $vid->gridVideoRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
 
-                $now  = Carbon::now();
-                $date = $now->sub(str_replace(' ago', '', $date));
+                    $now  = Carbon::now();
+                    $date = $now->sub(str_replace(' ago', '', $date));
 
-                // echo "\t" . $title . PHP_EOL;
-                addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
+                    // echo "\t" . $title . PHP_EOL;
+                    addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
+                }
             }
 
         } else {
