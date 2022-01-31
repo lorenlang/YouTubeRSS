@@ -9,6 +9,8 @@ class ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         'bf9f5270ae66ac6fa0290b4bf47867b7' => __DIR__ . '/..' . '/adodb/adodb-php/adodb.inc.php',
     );
 
@@ -23,6 +25,10 @@ class ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Contracts\\Translation\\' => 30,
             'Symfony\\Component\\Translation\\' => 30,
+        ),
+        'P' => 
+        array (
+            'Psr\\Log\\' => 8,
         ),
         'M' => 
         array (
@@ -59,6 +65,10 @@ class ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7
         array (
             0 => __DIR__ . '/..' . '/symfony/translation',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -73,18 +83,11 @@ class ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7
         ),
     );
 
-    public static $prefixesPsr0 = array (
-        'P' => 
-        array (
-            'Psr\\Log\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/psr/log',
-            ),
-        ),
-    );
-
     public static $classMap = array (
+        'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
+        'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
     );
 
@@ -93,7 +96,6 @@ class ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit3ee02fa0ea3e392cb38144c43e400ac7::$classMap;
 
         }, null, ClassLoader::class);

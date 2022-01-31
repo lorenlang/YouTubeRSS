@@ -1,13 +1,15 @@
 <?php
 
 /**
- * @version V5.19  23-Apr-2014  (c) 2000-2014 John Lim (jlim#natsoft.com). All rights reserved.
+ * @version   v5.20.21  22-Jan-2022
+ * @copyright (c) 2000-2013 John Lim (jlim#natsoft.com). All rights reserved.
+ * @copyright (c) 2014      Damien Regad, Mark Newnham and the ADOdb community
  * Released under both BSD license and Lesser GPL library license.
   Whenever there is any discrepancy between the two licenses,
   the BSD license will take precedence.
  */
 
-/* Documentation on usage is at http://php.weblogs.com/adodb_csv
+/* Documentation on usage is at http://adodb.org/dokuwiki/doku.php?id=v5:proxy:proxy_index
  *
  * Legal query string parameters:
  *
@@ -52,7 +54,11 @@ function err($s)
 // undo stupid magic quotes
 function undomq(&$m)
 {
-	if (get_magic_quotes_gpc()) {
+	// PHP7.4 spits deprecated notice, PHP8 removed magic_* stuff
+	if (version_compare(PHP_VERSION, '7.4.0', '<')
+		&& function_exists('get_magic_quotes_gpc')
+		&& get_magic_quotes_gpc()
+	) {
 		// undo the damage
 		$m = str_replace('\\\\','\\',$m);
 		$m = str_replace('\"','"',$m);
