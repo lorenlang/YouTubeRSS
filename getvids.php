@@ -81,17 +81,19 @@ foreach ($channels->items as $channel) {
             $vids = $json->contents->twoColumnBrowseResultsRenderer->tabs[1]->tabRenderer->content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->gridRenderer->items;
 
             foreach ($vids as $vid) {
+                if (isset($vid->gridVideoRenderer)) {
 
-                $vidID    = $vid->gridVideoRenderer->videoId;
-                $title    = $vid->gridVideoRenderer->title->simpleText ? $vid->gridVideoRenderer->title->simpleText : $vid->gridVideoRenderer->title->runs[0]->text;
-                $date     = $vid->gridVideoRenderer->publishedTimeText->simpleText;
-                $duration = $vid->gridVideoRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
+                    $vidID    = $vid->gridVideoRenderer->videoId;
+                    $title    = $vid->gridVideoRenderer->title->simpleText ?? $vid->gridVideoRenderer->title->runs[0]->text;
+                    $date     = $vid->gridVideoRenderer->publishedTimeText->simpleText;
+                    $duration = $vid->gridVideoRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
 
-                $now  = Carbon::now();
-                $date = $now->sub(str_replace(' ago', '', $date));
+                    $now  = Carbon::now();
+		    $date = $now->sub(str_replace(['Streamed ', ' ago'], ['',''], $date));
 
-                // echo "\t" . $title . PHP_EOL;
-                addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
+                    // echo "\t" . $title . PHP_EOL;
+                    addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
+                }
             }
 
         } else if (strpos($work, 'var ytInitialData = ') !== FALSE) {
@@ -107,12 +109,13 @@ foreach ($channels->items as $channel) {
                 if (isset($vid->gridVideoRenderer)) {
 
                     $vidID    = $vid->gridVideoRenderer->videoId;
-                    $title    = $vid->gridVideoRenderer->title->simpleText ? $vid->gridVideoRenderer->title->simpleText : $vid->gridVideoRenderer->title->runs[0]->text;
+                    $title    = $vid->gridVideoRenderer->title->simpleText ?? $vid->gridVideoRenderer->title->runs[0]->text;
+                    //$title    = $vid->gridVideoRenderer->title->simpleText ? $vid->gridVideoRenderer->title->simpleText : $vid->gridVideoRenderer->title->runs[0]->text;
                     $date     = $vid->gridVideoRenderer->publishedTimeText->simpleText;
                     $duration = $vid->gridVideoRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
 
                     $now  = Carbon::now();
-                    $date = $now->sub(str_replace(' ago', '', $date));
+		    $date = $now->sub(str_replace(['Streamed ', ' ago'], ['',''], $date));
 
                     // echo "\t" . $title . PHP_EOL;
                     addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
