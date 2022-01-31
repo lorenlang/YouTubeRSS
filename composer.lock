@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28877dec1297b74318a4aefaad34be3d",
+    "content-hash": "087129c9eeabbee79cc6af8abb38b9b9",
     "packages": [
         {
             "name": "adodb/adodb-php",
-            "version": "v5.19",
+            "version": "v5.20.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ADOdb/ADOdb.git",
-                "reference": "773bb9b7ccd81b403bf75f7ef476c3f2d7ee04de"
+                "reference": "6c38e6c614802acd3151444a71191912edcec965"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ADOdb/ADOdb/zipball/773bb9b7ccd81b403bf75f7ef476c3f2d7ee04de",
-                "reference": "773bb9b7ccd81b403bf75f7ef476c3f2d7ee04de",
+                "url": "https://api.github.com/repos/ADOdb/ADOdb/zipball/6c38e6c614802acd3151444a71191912edcec965",
+                "reference": "6c38e6c614802acd3151444a71191912edcec965",
                 "shasum": ""
             },
             "require": {
@@ -31,8 +31,8 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-2.1",
-                " BSD-2-Clause"
+                "BSD-3-Clause",
+                "LGPL-2.1-or-later"
             ],
             "authors": [
                 {
@@ -43,14 +43,22 @@
                 {
                     "name": "Damien Regad",
                     "role": "Current maintainer"
+                },
+                {
+                    "name": "Mark Newnham",
+                    "role": "Developer"
                 }
             ],
             "description": "ADOdb is a PHP database abstraction layer library",
-            "homepage": "http://adodb.sourceforge.net/",
+            "homepage": "http://adodb.org/",
             "keywords": [
-                "database"
+                "abstraction",
+                "database",
+                "layer",
+                "library",
+                "php"
             ],
-            "time": "2014-04-23T14:37:03+00:00"
+            "time": "2022-01-22T22:38:02+00:00"
         },
         {
             "name": "mibe/feedwriter",
@@ -679,7 +687,8 @@
     "platform": {
         "ext-json": "*",
         "ext-dom": "*",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "ext-libxml": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"
