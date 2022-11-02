@@ -118,7 +118,7 @@ foreach ($channels->items as $channel) {
                 }
 
                     $vidID    = $renderer->videoId;
-                    $title    = $renderer->title->simpleText ?? $vid->gridVideoRenderer->title->runs[0]->text;
+                    $title    = $renderer->title->simpleText ?? $renderer->title->runs[0]->text;
                     $date     = $renderer->publishedTimeText->simpleText ?? 'Today';
                     $duration = $renderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText ?? '0:00';
 
