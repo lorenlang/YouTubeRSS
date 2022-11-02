@@ -15,7 +15,7 @@ require_once 'database.php';
 $videos = new VideoCollection($DB);
 
 $thru = date('Y-m-d');
-$from = date('Y-m-d', strtotime($thru . '-6 week'));
+$from = date('Y-m-d', strtotime($thru . '-3 week'));
 //$from = date('Y-m-d', strtotime($thru . '-3 year'));
 
 //$videos->getAll();
