@@ -20,6 +20,18 @@ class ChannelCollection extends Collection {
         parent::__construct($DB);
     }
 
+    public function get($id) {
+
+        $sql = "SELECT * FROM channels WHERE channelType = 'video' and id = $id";
+
+        $channels = $this->DB->GetAll($sql);
+
+        foreach ($channels as $ch) {
+            $this->addItem(new Channel($ch['fullName'], $ch['urlType'], $ch['urlName'], $ch['id']));
+        }
+
+    }
+
     public function getAll() {
 
         $sql = "SELECT * FROM channels WHERE channelType = 'video'";

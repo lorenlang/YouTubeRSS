@@ -51,6 +51,8 @@ $channels->getAll();
 
 //$videos = new VideoCollection($DB);
 
+die($channels->length());
+
 foreach ($channels->items as $channel) {
 
     echo PHP_EOL;
