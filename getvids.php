@@ -128,8 +128,7 @@ foreach ($channels->items as $channel) {
                 $now  = Carbon::now();
                 $date = $now->sub(str_replace(['Streamed ', ' ago'], ['', ''], $date));
 
-                echo "\t" . $title . PHP_EOL;
-
+                // echo "\t" . $title . PHP_EOL;
                 addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
             }
 
