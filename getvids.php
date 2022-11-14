@@ -51,8 +51,6 @@ $channels->getAll();
 
 //$videos = new VideoCollection($DB);
 
-die($channels->length());
-
 foreach ($channels->items as $channel) {
 
     echo PHP_EOL;
@@ -61,8 +59,8 @@ foreach ($channels->items as $channel) {
 
 
     // download the main videos page
-    $srch = ['[URLTYPE]', '[URLNAME]'];
-    $repl = [$channel->urlType, $channel->urlName];
+    $srch = array('[URLTYPE]', '[URLNAME]');
+    $repl = array($channel->urlType, $channel->urlName);
 
     $url = str_replace($srch, $repl, CHANNEL_URL);
 
@@ -75,8 +73,8 @@ foreach ($channels->items as $channel) {
 
         if (strpos($work, 'window["ytInitialData"] =') !== FALSE) {
 
-            [$junk, $work] = explode('window["ytInitialData"] =', $work);
-            [$work, $junk] = explode(PHP_EOL, $work);
+            list($junk, $work) = explode('window["ytInitialData"] =', $work);
+            list($work, $junk) = explode(PHP_EOL, $work);
 
 
             $json = json_decode(rtrim(trim($work), ';'));
@@ -91,7 +89,7 @@ foreach ($channels->items as $channel) {
                     $duration = $vid->gridVideoRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
 
                     $now  = Carbon::now();
-                    $date = $now->sub(str_replace(['Streamed ', ' ago'], ['', ''], $date));
+        		    $date = $now->sub(str_replace(['Streamed ', ' ago'], ['',''], $date));
 
                     // echo "\t" . $title . PHP_EOL;
                     addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
@@ -100,35 +98,27 @@ foreach ($channels->items as $channel) {
 
         } else if (strpos($work, 'var ytInitialData = ') !== FALSE) {
 
-            [$junk, $work] = explode('var ytInitialData = ', $work);
-            [$work, $junk] = explode(';</script', $work);
+            list($junk, $work) = explode('var ytInitialData = ', $work);
+            list($work, $junk) = explode(';</script', $work);
 
 
             $json = json_decode(rtrim(trim($work), ';'));
-
-            if (isset($json->contents->twoColumnBrowseResultsRenderer->tabs[1]->tabRenderer->content->sectionListRenderer)) {
-                $vids = $json->contents->twoColumnBrowseResultsRenderer->tabs[1]->tabRenderer->content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->gridRenderer->items;
-            } else {
-                $vids = $json->contents->twoColumnBrowseResultsRenderer->tabs[1]->tabRenderer->content->richGridRenderer->contents[0];
-            }
+            $vids = $json->contents->twoColumnBrowseResultsRenderer->tabs[1]->tabRenderer->content->sectionListRenderer->contents[0]->itemSectionRenderer->contents[0]->gridRenderer->items;
 
             foreach ($vids as $vid) {
                 if (isset($vid->gridVideoRenderer)) {
-                    $renderer = $vid->gridVideoRenderer;
-                } else {
-                    $renderer = $vid->richItemRenderer->content->videoRenderer;
-                }
 
-                    $vidID    = $renderer->videoId;
-                    $title    = $renderer->title->simpleText ?? $renderer->title->runs[0]->text;
-                    $date     = $renderer->publishedTimeText->simpleText ?? 'Today';
-                    $duration = $renderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText ?? '0:00';
+                    $vidID    = $vid->gridVideoRenderer->videoId;
+                    $title    = $vid->gridVideoRenderer->title->simpleText ?? $vid->gridVideoRenderer->title->runs[0]->text;
+                    $date     = $vid->gridVideoRenderer->publishedTimeText->simpleText;
+                    $duration = $vid->gridVideoRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
 
                     $now  = Carbon::now();
-                    $date = $date == 'Today' ? $now : $now->sub(str_replace(['Streamed ', ' ago'], ['', ''], $date));
+		            $date = $now->sub(str_replace(['Streamed ', ' ago'], ['',''], $date));
 
                     // echo "\t" . $title . PHP_EOL;
                     addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
+                }
             }
 
         } else {
