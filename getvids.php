@@ -116,7 +116,7 @@ foreach ($channels->items as $channel) {
 
                 if ($type = 1 && isset($vid->gridVideoRenderer)) {
                     $vidRenderer = $vid->gridVideoRenderer;
-                } else if ($type = 1 && isset($vid->richItemRenderer->content->videoRenderer)) {
+                } else if ($type = 2 && isset($vid->richItemRenderer->content->videoRenderer)) {
                     $vidRenderer = $vid->richItemRenderer->content->videoRenderer;
                 }
 
