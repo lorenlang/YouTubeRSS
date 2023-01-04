@@ -116,20 +116,23 @@ foreach ($channels->items as $channel) {
 
                 if ($type = 1 && isset($vid->gridVideoRenderer)) {
                     $vidRenderer = $vid->gridVideoRenderer;
-                } else if ($type = 2 && isset($vid->richItemRenderer->content->videoRenderer)) {
+                } else if ($type = 1 && isset($vid->richItemRenderer->content->videoRenderer)) {
                     $vidRenderer = $vid->richItemRenderer->content->videoRenderer;
                 }
 
-                $vidID    = $vidRenderer->videoId;
-                $title    = $vidRenderer->title->simpleText ?? $vidRenderer->title->runs[0]->text;
-                $date     = $vidRenderer->publishedTimeText->simpleText;
-                $duration = $vidRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
+                if (isset($vidRenderer->publishedTimeText->simpleText)) {
+                    $vidID    = $vidRenderer->videoId;
+                    $title    = $vidRenderer->title->simpleText ?? $vidRenderer->title->runs[0]->text;
+                    $date     = $vidRenderer->publishedTimeText->simpleText;
+                    $duration = $vidRenderer->thumbnailOverlays[0]->thumbnailOverlayTimeStatusRenderer->text->simpleText;
 
-                $now  = Carbon::now();
-                $date = $now->sub(str_replace(['Streamed ', ' ago'], ['', ''], $date));
+                    $now  = Carbon::now();
+                    $date = $now->sub(str_replace(['Streamed ', ' ago'], ['', ''], $date));
 
-                // echo "\t" . $title . PHP_EOL;
-                addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
+                    // echo "\t" . $title . PHP_EOL;
+                    addVideo($DB, $channel->id, $vidID, $title, $duration, $date);
+                }
+
             }
 
         } else {
